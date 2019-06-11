@@ -9,7 +9,7 @@ export const getBag = (userId: string): Promise<IRequestResponse> => {
                 if (error) return reject({ code: 500, message: 'Error when searching for bag on server.' });
                 if (!foundBag) return reject({ code: 404, message: 'Bag not found.' });
 
-                return resolve({ code: 200, data: foundBag, message: 'success' });
+                return resolve({ code: 200, data: foundBag });
             });
     });
 };
