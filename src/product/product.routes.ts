@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
+import { ProductType } from './product.type';
 import { getProducts, saveProduct, updateProduct, deleteProduct } from './product.controller';
+import { sanitizeObject } from '../app/utils/sanitize.util';
 
 export const ProductRoutes = express.Router();
 
@@ -8,6 +10,7 @@ ProductRoutes.get(
     async (req: Request, res: Response): Promise<Response> => {
         try {
             const { code, data } = await getProducts();
+            console.log(req);
 
             return res.status(code).send({ data });
         } catch ({ code, message }) {
@@ -16,17 +19,22 @@ ProductRoutes.get(
     },
 );
 
-ProductRoutes.post('/products', async (req, res) => {
-    const product = req.body;
+ProductRoutes.post(
+    '/products',
+    async (req: Request, res: Response): Promise<Response> => {
+        const product: ProductType = sanitizeObject(req.body, req);
 
-    try {
-        const { code, data } = await saveProduct(product);
+        console.log(product);
 
-        return res.status(code).send({ data });
-    } catch ({ code, message }) {
-        return res.status(code).send({ message });
-    }
-});
+        try {
+            const { code, data } = await saveProduct(product);
+
+            return res.status(code).send({ data });
+        } catch ({ code, message }) {
+            return res.status(code).send({ message });
+        }
+    },
+);
 
 ProductRoutes.patch('/products/:productId', async (req, res) => {
     const { productId } = req.params;

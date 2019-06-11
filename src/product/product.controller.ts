@@ -1,14 +1,6 @@
 import { ProductModel } from './product.model';
 import { IRequestResponse } from './../app/interfaces/request.interface';
-
-type Product = {
-    name: string;
-    description: string;
-    cost: string;
-    category: string;
-    type: string;
-    sale: boolean;
-};
+import { ProductType } from './product.type';
 
 export const getProducts = (): Promise<IRequestResponse> => {
     return new Promise((resolve, reject) => {
@@ -21,7 +13,7 @@ export const getProducts = (): Promise<IRequestResponse> => {
     });
 };
 
-export const saveProduct = (product: Product): Promise<IRequestResponse> => {
+export const saveProduct = (product: ProductType): Promise<IRequestResponse> => {
     return new Promise((resolve, reject) => {
         const { name, description, cost, category, type } = product;
 
@@ -38,7 +30,7 @@ export const saveProduct = (product: Product): Promise<IRequestResponse> => {
     });
 };
 
-export const updateProduct = (modifiedProduct: Product, productId: string): Promise<IRequestResponse> => {
+export const updateProduct = (modifiedProduct: ProductType, productId: string): Promise<IRequestResponse> => {
     return new Promise((resolve, reject) => {
         ProductModel.findOneAndUpdate({ _id: productId }, modifiedProduct, { new: true }, (error, updatedProduct) => {
             if (error) return reject({ code: 500, message: 'Error when saving product on server.' });
