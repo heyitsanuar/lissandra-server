@@ -1,11 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { AppRoutes } from './app.routes';
+const expressSanitizer = require('express-sanitizer');
 
 export const App = express();
 
 App.use(bodyParser.json());
 App.use(bodyParser.urlencoded({ extended: true }));
+
+App.use(expressSanitizer());
 
 // Setting CORS and HEADERS permits
 App.use((req, res, next): void => {

@@ -1,5 +1,6 @@
+import { Request } from 'express';
 export interface IRequestResponse {
     code: number;
-    message: string;
     data?: object;
+    message?: string;
 }
