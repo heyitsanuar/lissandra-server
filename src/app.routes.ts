@@ -1,10 +1,6 @@
-import express, { Response } from 'express';
+import express from 'express';
+import { BagRoutes } from './bag/bag.routes';
 
 export const AppRoutes = express.Router();
 
-AppRoutes.use(
-    '/',
-    (req, res): Response => {
-        return res.send('Endpoint working.');
-    },
-);
+AppRoutes.use(BagRoutes);
