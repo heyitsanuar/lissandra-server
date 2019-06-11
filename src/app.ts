@@ -1,12 +1,27 @@
-import express, { Response, Request } from 'express';
+import express from 'express';
+import bodyParser from 'body-parser';
+import { AppRoutes } from './app.routes';
 
-const app = express();
+export const App = express();
 
-app.get(
-    '/',
-    (req: Request, res: Response): Response => {
-        return res.send('Hola');
-    },
-);
+App.use(bodyParser.json());
+App.use(bodyParser.urlencoded({ extended: true }));
 
-app.listen(5000, () => console.log('Server running'));
+// Setting CORS and HEADERS permits
+App.use((req, res, next): void => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Cookies, Accept, Access-Control-Allow-Request-Method',
+    );
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PATCH, DELETE');
+    next();
+});
+
+App.use('/api', AppRoutes);
+
+// Handling 404 requests
+App.use((req, res): void => {
+    res.send({ message: 'Endpoint not found.' });
+});
