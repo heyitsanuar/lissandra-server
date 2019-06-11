@@ -22,10 +22,16 @@ BagRoutes.post('/bags', async (req, res) => {
     return res.status(200).send({ data: 'Bag endpoint post.' });
 });
 
-BagRoutes.patch('/bags', async (req, res) => {
-    return res.status(200).send({ data: 'Bag endpoint patch.' });
+BagRoutes.patch('/bags/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+    } catch (error) {}
 });
 
-BagRoutes.delete('/bags', async (req, res) => {
-    return res.status(200).send({ data: 'Bag endpoint delete.' });
+BagRoutes.delete('/bags/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+    } catch (error) {}
 });
