@@ -1,4 +1,5 @@
 export interface IRequestResponse {
     code: number;
-    data: string;
+    message: string;
+    data?: object;
 }

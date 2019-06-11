@@ -4,12 +4,14 @@ import { getBag } from './bag.controller';
 export const BagRoutes = express.Router();
 
 BagRoutes.get(
-    '/bags',
+    '/bags/:id',
     async (req, res): Promise<Response> => {
-        try {
-            const response = await getBag();
+        const { id } = req.params;
 
-            return res.status(response.code).send({ data: response.data });
+        try {
+            const { code, data } = await getBag(id);
+
+            return res.status(code).send({ data });
         } catch ({ code, message }) {
             return res.status(code).send({ message });
         }
