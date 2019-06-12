@@ -10,7 +10,6 @@ ProductRoutes.get(
     async (req: Request, res: Response): Promise<Response> => {
         try {
             const { code, data } = await getProducts();
-            console.log(req);
 
             return res.status(code).send({ data });
         } catch ({ code, message }) {
@@ -35,7 +34,7 @@ ProductRoutes.post(
 
 ProductRoutes.patch('/products/:productId', async (req, res): Promise<Response> => {
     const productId = (req as any).sanitize(req.params.id);
-    const product = sanitizeBody(req);
+    const product: ProductType = sanitizeBody(req);
 
     try {
         const { code, data } = await updateProduct(product, productId);
